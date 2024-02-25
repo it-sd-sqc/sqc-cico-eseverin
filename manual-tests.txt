@@ -61,12 +61,15 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 ## Expected results
 * Should display "Developer" for the user name.
 
-# Module 4: Restrict non-numerical input
+
+# Module 5: Test Handler button on status pannel
 
 ## Test steps
 1. Build and run CiCo.
-2. Enter abcd into the field.
+2. Enter 00000000 into the field and click Update.
 
 ## Expected results
-* None of the inputs should show up.
+* The update pannel should include a button labled "Return".
+* Pressing this button should return you to the main panel.
+
 

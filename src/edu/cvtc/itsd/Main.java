@@ -6,9 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.TimerTask;
+import java.util.regex.Pattern;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
+import javax.swing.border.EmptyBorder;
 
 // CiCo application's primary class ///////////////////////////////////////////
 public class Main {
@@ -36,13 +37,16 @@ public class Main {
   // InputFilter manages user input to the card number field.
   private static class InputFilter extends DocumentFilter {
     private static final int MAX_LENGTH = 8;
+    private Pattern regexCheck = Pattern.compile("[0-9]+");
 
     @Override
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
       if (fb.getDocument() != null) {
-        super.insertString(fb, offset, stringToAdd, attr);
+        if (regexCheck.matcher(stringToAdd).matches()) {
+          super.insertString(fb, offset, stringToAdd, attr);
+        }
       }
       else {
         Toolkit.getDefaultToolkit().beep();
@@ -54,7 +58,9 @@ public class Main {
         throws BadLocationException
     {
       if (fb.getDocument() != null) {
-        super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+        if (regexCheck.matcher(stringToAdd).matches()) {
+          fb.replace(offset, lengthToDelete, stringToAdd, attr);
+        }
       }
       else {
         Toolkit.getDefaultToolkit().beep();
@@ -98,6 +104,7 @@ public class Main {
       }
     }
   }
+
 
   // GUI variables ////////////////////////////////////////////////////////////
   static JPanel deck;
